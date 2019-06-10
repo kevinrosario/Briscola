@@ -1,1 +1,24 @@
 @import '~bootstrap/scss/bootstrap';
+@import './colors';
+
+html,
+body {
+  background-color: $light-green;
+  display: grid;
+  font-family: 'EB Garamond', serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  align-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 90vh;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}

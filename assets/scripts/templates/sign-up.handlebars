@@ -1,0 +1,32 @@
+<div class="modal fade" id="sign-up-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign Up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card-body">
+          <form class="form" id="sign-up">
+            <div class="form-group">
+              <label for="sign-up-email">Email address</label>
+              <input type="email" name="credentials[email]" class="form-control sign-up-form" id="sign-up-email" aria-describedby="emailHelp" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+              <label for="sign-up-password">Password</label>
+              <input type="password" name="credentials[password]" class="form-control sign-up-form" id="sign-up-password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+              <label for="sign-up-password-confirmation">Confirm Password</label>
+              <input type="password" name="credentials[password_confirmation]" class="form-control sign-up-form" id="sign-up-password-confirmation" placeholder="Password" required/>
+            </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
