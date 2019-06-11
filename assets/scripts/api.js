@@ -15,7 +15,7 @@ const signUp = (data, url) => {
   })
 }
 
-const logOut = (url, token) => {
+const signOut = (url, token) => {
   return $.ajax({
     url: url + '/sign-out',
     method: 'DELETE',
@@ -70,27 +70,19 @@ const update = (data, url, id, token) => {
   return $.ajax({
     url: url + '/games/' + id,
     method: 'PATCH',
-    data: data,
+    data: JSON.stringify(data),
+    dataType: 'json',
+    contentType: 'application/json',
     headers: {
       Authorization: 'Token token=' + token
     }
   })
 }
 
-// const getFinishedGames = () => {
-//   return $.ajax({
-//     url: url + '/games?over=true',
-//     method: 'GET',
-//     headers: {
-//       Authorization: 'Token token=' + store.user.token
-//     }
-//   })
-// }
-
 module.exports = {
   signIn,
   signUp,
-  logOut,
+  signOut,
   changePassword,
   create,
   update,

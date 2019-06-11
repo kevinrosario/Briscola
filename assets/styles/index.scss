@@ -4,21 +4,49 @@
 html,
 body {
   background-color: $light-green;
-  display: grid;
   font-family: 'EB Garamond', serif;
   height: 100vh;
   margin: 0;
   padding: 0;
 }
 
-main {
-  align-content: center;
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 90vh;
+header {
+  margin: 0;
+  max-height: 6vh;
 }
 
-.container {
+main {
+  align-items: center;
   display: flex;
   justify-content: center;
+  margin: 0;
+  min-height: 94vh;
+}
+
+.user-card {
+  cursor: pointer;
+}
+
+.btn-secondary {
+  margin: 0 .5em;
+}
+
+.gamearea {
+  margin: auto;
+  max-height: 80vh;
+  max-width: 80vh;
+}
+
+.gameboard {
+  display: flex;
+  flex-wrap: wrap;
+
+  > .gamebox {
+    align-items: center;
+    border: 1px solid $black;
+    display: flex;
+    font-size: 1.25em;
+    justify-content: center;
+    white-space: pre-line;
+  }
 }
