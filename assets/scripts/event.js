@@ -20,7 +20,6 @@ const onSignIn = (event) => {
   api.signIn(formData, config.apiUrl)
     .then((response) => {
       store.user = response.user
-      console.log(store)
       ui.removeFromContainer()
       ui.setSignOut()
       onSetBoard()
@@ -55,23 +54,30 @@ const onSignOut = (event) => {
 }
 
 const onCardSelected = (event) => {
-  const index = addCardToCurrent(event)
+  const index = addCardToCurrentCards(event)
   ui.moveCard(index)
-
-  setTimeout(() => {
-    api.update(store.game, config.apiUrl, store.game.id, store.user.token)
-      .then((response) => {
-        store.game = response.game
+  api.update(store.game, config.apiUrl, store.game.id, store.user.token)
+    .then((response) => {
+      store.game = response.game
+      setTimeout(() => {
+        addPlayerSelection()
+      }, 1000)
+      setTimeout(() => {
         ui.setGame(store.game)
-        addListenerToAll() // add listener if it have a card
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, 500)
+      }, 1500)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
-const addCardToCurrent = (event) => {
+const addPlayerSelection = () => {
+  if (store.game.player_two_last_selection[0]) {
+    ui.addPlayerTwoSelection(store.game.player_two_last_selection[0])
+  }
+}
+
+const addCardToCurrentCards = (event) => {
   const index = $(event.target).data('id')
   const card = store.game.player_one_hand.splice(index, 1)
   store.game.current_cards.push(card[0])
@@ -84,7 +90,6 @@ const onNewGame = (event) => {
     .then((response) => {
       store.game = response.game
       ui.setGame(store.game)
-      addListenerToAll()
     })
     .catch((error) => {
       console.log(error)
@@ -108,7 +113,6 @@ const onDeleteGame = (event) => {
     .then((response) => {
       ui.removeGameFromModal(id)
       if (id === store.game.id) { // remove current game
-        console.log('deleted')
         store.game = {}
         ui.setGame(store.game)
         removeListenerToAll()
@@ -124,27 +128,40 @@ const onLoadGame = (event) => {
   api.getGame(id, config.apiUrl, store.user.token)
     .then((response) => {
       store.game = response.game
+      addPlayerSelection()
       ui.setGame(store.game)
     })
     .catch()
-}
-
-const addListenerToAll = () => {
-  $('.user-card').addClass('can-play')
 }
 
 const removeListenerToAll = () => {
   $('.user-card').removeClass('can-play')
 }
 
-// const addEventListener = (event, response) => {
-//   if (response.game.player_one_hand.length === 3) {
-//     $(event.target).addClass('can-play')
-//   }
-// }
-
 const onShowSignUpModal = (event) => {
   ui.setSignUpModal()
+}
+
+const onShowSettingModal = (event) => {
+  ui.setSettingModal()
+  $('#setting-modal').modal('toggle')
+}
+
+const onChangePassword = (event) => {
+  event.preventDefault()
+  const formData = getFormFields(event.target)
+  api.changePassword(formData, config.apiUrl, store.user.token)
+    .then((response) => {
+      ui.addValid($('.setting-form'))
+    })
+    .catch((error) => {
+      console.log(error)
+      ui.addInvalid($('.setting-form'))
+    })
+}
+
+const onRemoveSettingModal = () => {
+  ui.removeModal()
 }
 
 const onRemoveSignUpModal = () => {
@@ -168,5 +185,8 @@ module.exports = {
   onCardSelected,
   onShowSignUpModal,
   onRemoveSignUpModal,
-  onRemoveIndexModal
+  onRemoveIndexModal,
+  onShowSettingModal,
+  onRemoveSettingModal,
+  onChangePassword
 }

@@ -15,10 +15,16 @@ $(() => {
   $('.container').on('click', '#display-sign-up-modal', eventHandler.onShowSignUpModal)
   $('.container').on('hide.bs.modal', '#sign-up-modal', eventHandler.onRemoveSignUpModal)
   $('.navbar-nav').on('click', '#sign-out', eventHandler.onSignOut)
+
   $('.navbar-nav').on('click', '#index-games-button', eventHandler.onShowIndexModal)
   $('.navbar-nav').on('hide.bs.modal', '#index-games', eventHandler.onRemoveIndexModal)
+
   $('.navbar-nav').on('click', '.btn-info', eventHandler.onLoadGame)
   $('.navbar-nav').on('click', '.btn-danger', eventHandler.onDeleteGame)
   $('.navbar-nav').on('click', '#new-game', eventHandler.onNewGame)
   $('.container').on('click', '.can-play', eventHandler.onCardSelected)
+
+  $('.navbar-nav').on('click', '#settings', eventHandler.onShowSettingModal)
+  $('.navbar-nav').on('submit', '#change-password', eventHandler.onChangePassword)
+  $('.navbar-nav').on('hide.bs.modal', '#setting-modal', eventHandler.onRemoveSettingModal)
 })

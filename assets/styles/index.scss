@@ -1,5 +1,5 @@
+@import './colors.scss';
 @import '~bootstrap/scss/bootstrap';
-@import './colors';
 
 html,
 body {
@@ -23,9 +23,18 @@ main {
   min-height: 94vh;
 }
 
+// User login bootstrap card
 .card {
   margin: 0 auto;
   max-width: 20vw;
+}
+
+.card-representation {
+  background-color: $blue;
+  border-radius: 10px;
+  height: 60%;
+  margin: .2em;
+  width: 40%;
 }
 
 .can-play {
@@ -48,7 +57,7 @@ main {
 
   > .gamebox {
     align-items: center;
-    border: 1px solid $black;
+    // border: 1px solid $black;
     display: flex;
     font-size: 1.25em;
     justify-content: center;
