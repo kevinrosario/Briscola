@@ -23,7 +23,12 @@ main {
   min-height: 94vh;
 }
 
-.user-card {
+.card {
+  margin: 0 auto;
+  max-width: 20vw;
+}
+
+.can-play {
   cursor: pointer;
 }
 

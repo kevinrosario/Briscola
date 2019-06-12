@@ -1,7 +1,10 @@
+'use strict'
+
 const signInTemplate = require('./templates/sign-in.handlebars')
 const signUpTemplate = require('./templates/sign-up.handlebars')
 const boardTemplate = require('./templates/board.handlebars')
 const signOutTemplate = require('./templates/nav-bar.handlebars')
+const indexGamesTemplate = require('./templates/index-games.handlebars')
 
 const setSignIn = () => {
   const showSignIn = signInTemplate()
@@ -31,9 +34,18 @@ const setSignUpModal = () => {
   $('.container').append(showSignUp)
 }
 
-const removeSignUpModal = () => {
+const removeModal = () => {
   $('.modal').remove()
   $('.fade').remove()
+}
+
+const removeGameFromModal = (id) => {
+  $(`[data-game=${id}]`).remove()
+}
+
+const setIndexModal = (games) => {
+  const showIndexModal = indexGamesTemplate(games)
+  $('.navbar-nav').append(showIndexModal)
 }
 
 const addSuccess = (target) => {
@@ -56,15 +68,20 @@ const removeInvalid = (target) => {
   }
 }
 
-const setGame = (hand, briscola, computerSelection, remainingCards) => {
-  $('#current-selection').empty()
-  $('#deck').text(`Cards Left: ${remainingCards}`)
-  $('#briscola').text(`Briscola\nSuit: ${briscola.suit}\nRank: ${briscola.rank}\n`)
-  hand.forEach((card, index) => {
-    $(`[data-id=${index}]`).text(`Suit: ${card.suit}\nRank: ${card.rank}\n`)
-  })
-  if (computerSelection.length !== 0) {
-    $('#current-selection').append(`Suit: ${computerSelection[0].suit} Rank:${computerSelection[0].rank}`)
+const setGame = (game) => {
+  if (game.deck) {
+    $('#current-selection').empty()
+    $('#deck').text(`Cards Left: ${game.deck.length}`)
+    $('#briscola').text(`Briscola\nSuit: ${game.briscola.suit}\nRank: ${game.briscola.rank}\n`)
+    game.player_one_hand.forEach((card, index) => {
+      $(`[data-id=${index}]`).text(`Suit: ${card.suit}\nRank: ${card.rank}\n`)
+    })
+    if (game.current_cards.length !== 0) {
+      $('#current-selection').append(`Suit: ${game.current_cards[0].suit}
+                                      Rank:${game.current_cards[0].rank}`)
+    }
+  } else {
+    $('.game-text').empty()
   }
 }
 
@@ -79,13 +96,15 @@ module.exports = {
   setBoard,
   setSignOut,
   setSignUpModal,
+  setIndexModal,
   setGame,
   removeFromContainer,
   removeSignOut,
-  removeSignUpModal,
+  removeModal,
   addSuccess,
   addInvalid,
   removeSuccess,
   removeInvalid,
-  moveCard
+  moveCard,
+  removeGameFromModal
 }

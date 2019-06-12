@@ -1,3 +1,4 @@
+'use strict'
 
 const signIn = (data, url) => {
   return $.ajax({
@@ -66,11 +67,28 @@ const create = (url, token) => {
   })
 }
 
-const update = (data, url, id, token) => {
+const destroy = (id, url, token) => {
+  return $.ajax({
+    url: url + '/games/' + id,
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Token token=' + token
+    }
+  })
+}
+
+const update = (game, url, id, token) => {
   return $.ajax({
     url: url + '/games/' + id,
     method: 'PATCH',
-    data: JSON.stringify(data),
+    data: JSON.stringify(
+      { game:
+        {
+          player_one_hand: game.player_one_hand,
+          current_cards: game.current_cards
+        }
+      }
+    ),
     dataType: 'json',
     contentType: 'application/json',
     headers: {
@@ -87,5 +105,6 @@ module.exports = {
   create,
   update,
   getGames,
-  getGame
+  getGame,
+  destroy
 }
