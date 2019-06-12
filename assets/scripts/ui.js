@@ -112,21 +112,21 @@ const calculateScore = (playerEarned) => {
 }
 
 module.exports = {
+  addValid,
+  addPlayerTwoSelection,
+  addInvalid,
   setSignIn,
   setBoard,
   setSignOut,
   setSignUpModal,
   setIndexModal,
+  setSettingModal,
   setGame,
+  moveCard,
+  removeSuccess,
+  removeInvalid,
   removeFromContainer,
   removeSignOut,
   removeModal,
-  addValid,
-  addInvalid,
-  removeSuccess,
-  removeInvalid,
-  moveCard,
-  removeGameFromModal,
-  setSettingModal,
-  addPlayerTwoSelection
+  removeGameFromModal
 }

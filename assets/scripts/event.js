@@ -34,7 +34,7 @@ const onSignUp = (event) => {
   const formData = getFormFields(event.target)
   api.signUp(formData, config.apiUrl)
     .then((response) => {
-      ui.removeSignUpModal()
+      ui.removeModal()
       onSignIn(event)
     }).catch(() => {
       ui.addInvalid($('.sign-up-form'))
@@ -160,33 +160,23 @@ const onChangePassword = (event) => {
     })
 }
 
-const onRemoveSettingModal = () => {
-  ui.removeModal()
-}
-
-const onRemoveSignUpModal = () => {
-  ui.removeModal()
-}
-
-const onRemoveIndexModal = () => {
+const onRemoveModal = () => {
   ui.removeModal()
 }
 
 module.exports = {
+  onCardSelected,
+  onChangePassword,
+  onDeleteGame,
+  onLoadGame,
+  onNewGame,
   onSetSignIn,
   onSetBoard,
   onSignIn,
   onSignUp,
   onSignOut,
-  onNewGame,
-  onDeleteGame,
-  onLoadGame,
   onShowIndexModal,
-  onCardSelected,
   onShowSignUpModal,
-  onRemoveSignUpModal,
-  onRemoveIndexModal,
   onShowSettingModal,
-  onRemoveSettingModal,
-  onChangePassword
+  onRemoveModal
 }

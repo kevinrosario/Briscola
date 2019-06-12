@@ -13,11 +13,11 @@ $(() => {
   $('.container').on('submit', '#sign-in', eventHandler.onSignIn)
   $('.container').on('submit', '#sign-up', eventHandler.onSignUp)
   $('.container').on('click', '#display-sign-up-modal', eventHandler.onShowSignUpModal)
-  $('.container').on('hide.bs.modal', '#sign-up-modal', eventHandler.onRemoveSignUpModal)
+  $('.container').on('hide.bs.modal', '#sign-up-modal', eventHandler.onRemoveModal)
   $('.navbar-nav').on('click', '#sign-out', eventHandler.onSignOut)
 
   $('.navbar-nav').on('click', '#index-games-button', eventHandler.onShowIndexModal)
-  $('.navbar-nav').on('hide.bs.modal', '#index-games', eventHandler.onRemoveIndexModal)
+  $('.navbar-nav').on('hide.bs.modal', '#index-games', eventHandler.onRemoveModal)
 
   $('.navbar-nav').on('click', '.btn-info', eventHandler.onLoadGame)
   $('.navbar-nav').on('click', '.btn-danger', eventHandler.onDeleteGame)
@@ -26,5 +26,5 @@ $(() => {
 
   $('.navbar-nav').on('click', '#settings', eventHandler.onShowSettingModal)
   $('.navbar-nav').on('submit', '#change-password', eventHandler.onChangePassword)
-  $('.navbar-nav').on('hide.bs.modal', '#setting-modal', eventHandler.onRemoveSettingModal)
+  $('.navbar-nav').on('hide.bs.modal', '#setting-modal', eventHandler.onRemoveModal)
 })
