@@ -22,7 +22,7 @@ $(() => {
   $('.navbar-nav').on('click', '.btn-info', eventHandler.onLoadGame)
   $('.navbar-nav').on('click', '.btn-danger', eventHandler.onDeleteGame)
   $('.navbar-nav').on('click', '#new-game', eventHandler.onNewGame)
-  $('.container').on('click', '.can-play', eventHandler.onCardSelected)
+  $('.container').on('click', '.user-card', eventHandler.onCardSelected)
 
   $('.navbar-nav').on('click', '#settings', eventHandler.onShowSettingModal)
   $('.navbar-nav').on('submit', '#change-password', eventHandler.onChangePassword)

@@ -10,10 +10,13 @@
       <div class="modal-body">
         {{#each games as |game|}}
         <div data-game="{{game.id}}">
-          <h6>ID:{{game.id}}</h6>
+          <h6>Game ID: {{game.id}}</h6>
+          <p>Cards Remaining: {{game.deck.length}}</p>
           {{#unless game.over}}
             <button class="btn btn-info" data-button="{{game.id}}">Load Game</button>
             <button class="btn btn-danger" data-button="{{game.id}}">Delete</button>
+            {{else}}
+            <p>Game Finished</p>
           {{/unless}}
           <hr>
         </div>

@@ -1,10 +1,12 @@
 @import './colors.scss';
+@import './theme.scss';
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Amiri|Dancing+Script:400,700&display=swap');
 
 html,
 body {
   background-color: $light-green;
-  font-family: 'EB Garamond', serif;
+  font-family: 'Amiri', serif;
   height: 100vh;
   margin: 0;
   padding: 0;
@@ -26,19 +28,31 @@ main {
 // User login bootstrap card
 .card {
   margin: 0 auto;
-  max-width: 20vw;
+  max-width: 35vw;
 }
 
 .card-representation {
   background-color: $blue;
   border-radius: 10px;
-  height: 60%;
+  height: 80%;
   margin: .2em;
-  width: 40%;
+  text-align: center;
+  width: 60%;
 }
 
-.can-play {
+.user-card {
   cursor: pointer;
+}
+
+.user-card:hover {
+  border: 2px solid $light-blue;
+}
+
+.game-text {
+  background-color: $blue;
+  color: $white;
+  font-family: 'Dancing Script', cursive;
+  font-size: .9em;
 }
 
 .btn-secondary {
@@ -59,8 +73,26 @@ main {
     align-items: center;
     // border: 1px solid $black;
     display: flex;
-    font-size: 1.25em;
     justify-content: center;
     white-space: pre-line;
+    height: calc(100/3);
+  }
+}
+
+.navbar-brand {
+  font-family: 'Dancing Script', cursive;
+}
+
+#display-sign-up-modal{
+  color: $light-blue;
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    max-width: 70%;
+  }
+
+  .game-text{
+    font-size: .5em;
   }
 }

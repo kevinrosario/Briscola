@@ -81,7 +81,6 @@ const addCardToCurrentCards = (event) => {
   const index = $(event.target).data('id')
   const card = store.game.player_one_hand.splice(index, 1)
   store.game.current_cards.push(card[0])
-  $(event.target).removeClass('can-play') // Remove class to stop listener.
   return index
 }
 
@@ -115,7 +114,6 @@ const onDeleteGame = (event) => {
       if (id === store.game.id) { // remove current game
         store.game = {}
         ui.setGame(store.game)
-        removeListenerToAll()
       }
     })
     .catch((error) => {
@@ -132,10 +130,6 @@ const onLoadGame = (event) => {
       ui.setGame(store.game)
     })
     .catch()
-}
-
-const removeListenerToAll = () => {
-  $('.user-card').removeClass('can-play')
 }
 
 const onShowSignUpModal = (event) => {

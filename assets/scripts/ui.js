@@ -76,17 +76,18 @@ const removeInvalid = (target) => {
 
 const setGame = (game) => {
   if (game.deck) {
-    $('#current-selection').empty()
+    $('.game-text').empty()
+    $('#current-computer-selection').empty().removeClass('card-representation')
+    $('#current-user-selection').empty().removeClass('card-representation')
     $('#deck').text(`Cards Left: ${game.deck.length}\n`)
-    $('#deck').append(`Score: ${calculateScore(game.player_one_earned)}`)
+    $('#deck').append(`Score: ${calculateScore(game.player_one_earned)}\n`)
     $('#briscola').text(`Briscola\nSuit: ${game.briscola.suit}\nRank: ${game.briscola.rank}\n`)
     game.player_one_hand.forEach((card, index) => {
       $(`[data-id=${index}]`).text(`Suit: ${card.suit}\nRank: ${card.rank}\n`)
-      $(`[data-id=${index}]`).addClass('can-play')
+      $(`[data-id=${index}]`).addClass('user-card').addClass('card-representation')
     })
     if (game.current_cards.length !== 0) {
-      $('#current-selection').append(`Computer Selection:\nSuit: ${game.current_cards[0].suit}
-                                      Rank:${game.current_cards[0].rank}\n`)
+      $('#current-computer-selection').append(`CPU\nSuit: ${game.current_cards[0].suit}\nRank: ${game.current_cards[0].rank}\n`).addClass('card-representation')
     }
   } else {
     $('.game-text').empty()
@@ -95,12 +96,14 @@ const setGame = (game) => {
 
 const moveCard = (id) => {
   const text = $(`[data-id=${id}]`).text()
-  $(`[data-id=${id}]`).empty()
-  $('#current-selection').append(`User Selection:\n${text}\n`)
+  $(`[data-id=${id}]`).empty().removeClass('card-representation')
+  $(`.cards`).removeClass('user-card') // remove listener
+  $('#current-user-selection').append(`User\n${text}\n`).addClass('card-representation')
 }
 
 const addPlayerTwoSelection = (card) => {
-  $('#current-selection').append(`Computer Selection:\nRank: ${card.rank}\nSuit: ${card.suit}\n`)
+  $('#current-computer-selection').append(`CPU\nSuit: ${card.suit}\nRank: ${card.rank}`)
+    .addClass('card-representation')
 }
 
 const calculateScore = (playerEarned) => {
