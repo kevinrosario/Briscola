@@ -53,6 +53,7 @@ const onSignOut = (event) => {
       ui.removeSignOut()
       ui.removeInvalid()
       ui.removeSignFailure()
+      ui.removeGameFinishedAlert()
       onSetSignIn()
       store.game = {}
     }).catch((error) => {
@@ -68,10 +69,10 @@ const onCardSelected = (event) => {
       store.game = response.game
       setTimeout(() => {
         addPlayerSelection()
-      }, 1000)
+      }, 200)
       setTimeout(() => {
         ui.setGame(store.game)
-      }, 1500)
+      }, 600)
     })
     .catch((error) => {
       console.log(error)
@@ -96,6 +97,7 @@ const onNewGame = (event) => {
     .then((response) => {
       store.game = response.game
       ui.setGame(store.game)
+      ui.removeGameFinishedAlert()
     })
     .catch((error) => {
       console.log(error)
@@ -107,7 +109,7 @@ const onShowIndexModal = (event) => {
     .then((response) => {
       ui.setIndexModal(response)
       if (store.game.id) {
-        ui.setGameLoaded(store.game.id)
+        ui.setGameLoaded(store.game.id) // sets current game as loaded
       }
       $('#index-games').modal('toggle')
     })
@@ -143,6 +145,7 @@ const onLoadGame = (event) => {
       addPlayerSelection()
       ui.setGame(store.game)
       ui.setGameLoaded(store.game.id)
+      ui.removeGameFinishedAlert()
     })
     .catch((error) => {
       console.log(error)

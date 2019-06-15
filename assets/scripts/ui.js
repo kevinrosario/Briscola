@@ -6,6 +6,8 @@ const boardTemplate = require('./templates/board.handlebars')
 const signOutTemplate = require('./templates/nav-bar.handlebars')
 const indexGamesTemplate = require('./templates/index-games.handlebars')
 const settingsTemplate = require('./templates/settings.handlebars')
+const gameFinishedTemplate = require('./templates/game-finished.handlebars')
+const score = require('./templates/helpers/score.js')
 
 const setSignIn = () => {
   const showSignIn = signInTemplate()
@@ -83,14 +85,15 @@ const removeInvalid = (target) => {
 }
 
 const setGame = (game) => {
-  if (game.deck) {
+  $('.cards').empty().removeClass('card-representation').removeClass('user-card') // removes listerner and representation
+  if (!game.over) {
     $('.game-text').empty()
     $('#current-computer-selection').empty().removeClass('card-representation')
     $('#current-user-selection').empty().removeClass('card-representation')
     $('#deck').text(`Cards Left: ${game.deck.length}\n`)
-    // $('#deck').append(`Score: ${calculateScore(game.player_one_earned)}\n`)
     $('#briscola').text(`Briscola\nSuit: ${game.briscola.suit}\nRank: ${game.briscola.rank}\n`)
     game.player_one_hand.forEach((card, index) => {
+      console.log(`Drawing ${card.suit}, ${card.rank} with Index: ${index}`)
       $(`[data-id=${index}]`).text(`Suit: ${card.suit}\nRank: ${card.rank}\n`)
       $(`[data-id=${index}]`).addClass('user-card').addClass('card-representation')
     })
@@ -98,14 +101,36 @@ const setGame = (game) => {
       $('#current-computer-selection').append(`CPU\nSuit: ${game.current_cards[0].suit}\nRank: ${game.current_cards[0].rank}\n`).addClass('card-representation')
     }
   } else {
-    $('.game-text').empty()
+    setGameFinishedAlert(game.player_one_earned)
   }
+}
+
+const setGameFinishedAlert = (playerEarnedCards) => {
+  const finalScore = score(playerEarnedCards)
+  let text = ``
+  let alertType = ``
+  if (finalScore > 60) {
+    text += `You win with ${finalScore} points!`
+    alertType += 'alert alert-success'
+  } else if (finalScore === 60) {
+    text += `The game is a draw!`
+    alertType += 'alert alert-warning'
+  } else {
+    text += `You lose with ${finalScore} points!`
+    alertType += 'alert alert-danger'
+  }
+  const showGameWin = gameFinishedTemplate()
+  $('main').append(showGameWin)
+  $('.game-end').addClass('alert').addClass(alertType).attr('role', 'alert').text(text)
+}
+
+const removeGameFinishedAlert = () => {
+  $('.alert').remove()
 }
 
 const moveCard = (id) => {
   const text = $(`[data-id=${id}]`).text()
   $(`[data-id=${id}]`).empty().removeClass('card-representation')
-  $(`.cards`).removeClass('user-card') // remove listener
   $('#current-user-selection').append(`User\n${text}\n`).addClass('card-representation')
 }
 
@@ -148,5 +173,6 @@ module.exports = {
   removeSignFailure,
   removeGameFromModal,
   removeGameLoaded,
+  removeGameFinishedAlert,
   clearForms
 }

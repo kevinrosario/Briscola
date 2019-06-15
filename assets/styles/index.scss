@@ -25,6 +25,10 @@ main {
   min-height: 94vh;
 }
 
+.container {
+  position: absolute;
+}
+
 // User login bootstrap card
 .card {
   margin: 0 auto;
@@ -54,8 +58,6 @@ main {
 .user-card {
   cursor: pointer;
 }
-
-
 
 .game-text {
   background-color: $blue;
