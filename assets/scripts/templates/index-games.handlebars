@@ -11,15 +11,16 @@
         {{#each games as |game|}}
         <div data-game="{{game.id}}">
           <h6>Game ID: {{game.id}}</h6>
+          {{#if game.over}}
+          <h6>Game Finished</h6>
+          <p>Your score: {{score game.player_one_earned}}</p>
+          {{else}}
           <p>Cards Remaining: {{game.deck.length}}</p>
-          {{#unless game.over}}
-            <button class="btn btn-info" data-button="{{game.id}}">Load Game</button>
-            <button class="btn btn-danger" data-button="{{game.id}}">Delete</button>
-            {{else}}
-            <p>Game Finished</p>
-          {{/unless}}
-          <hr>
+          <button class="btn btn-info" data-load="{{game.id}}">Load Game</button>
+          <button class="btn btn-danger" data-delete="{{game.id}}">Delete</button>
+          {{/if}}
         </div>
+        <hr>
         {{/each}}
       </div>
     </div>

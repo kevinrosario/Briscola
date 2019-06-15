@@ -7,6 +7,7 @@ const config = require('./config.js')
 const store = require('./store.js')
 
 const onSetSignIn = () => {
+  ui.removeSignFailure()
   ui.setSignIn()
 }
 
@@ -22,10 +23,12 @@ const onSignIn = (event) => {
       store.user = response.user
       ui.removeFromContainer()
       ui.setSignOut()
-      onSetBoard()
+      ui.setBoard()
     })
     .catch(() => {
       ui.addInvalid($('.login-form'))
+      ui.clearForms()
+      ui.setSignFailure()
     })
 }
 
@@ -38,6 +41,8 @@ const onSignUp = (event) => {
       onSignIn(event)
     }).catch(() => {
       ui.addInvalid($('.sign-up-form'))
+      ui.clearForms()
+      ui.setSignFailure()
     })
 }
 
@@ -46,6 +51,8 @@ const onSignOut = (event) => {
     .then((response) => {
       ui.removeFromContainer()
       ui.removeSignOut()
+      ui.removeInvalid()
+      ui.removeSignFailure()
       onSetSignIn()
       store.game = {}
     }).catch((error) => {
@@ -99,6 +106,9 @@ const onShowIndexModal = (event) => {
   api.getGames(config.apiUrl, store.user.token)
     .then((response) => {
       ui.setIndexModal(response)
+      if (store.game.id) {
+        ui.setGameLoaded(store.game.id)
+      }
       $('#index-games').modal('toggle')
     })
     .catch((error) => {
@@ -111,7 +121,8 @@ const onDeleteGame = (event) => {
   api.destroy(id, config.apiUrl, store.user.token)
     .then((response) => {
       ui.removeGameFromModal(id)
-      if (id === store.game.id) { // remove current game
+      console.log(store.game)
+      if (store.game.id !== undefined && id === store.game.id) { // remove current game
         store.game = {}
         ui.setGame(store.game)
       }
@@ -122,14 +133,20 @@ const onDeleteGame = (event) => {
 }
 
 const onLoadGame = (event) => {
-  const id = $(event.target).data('button')
+  const id = $(event.target).data('load')
   api.getGame(id, config.apiUrl, store.user.token)
     .then((response) => {
+      if (store.game.id) {
+        ui.removeGameLoaded(store.game.id)
+      }
       store.game = response.game
       addPlayerSelection()
       ui.setGame(store.game)
+      ui.setGameLoaded(store.game.id)
     })
-    .catch()
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 const onShowSignUpModal = (event) => {
@@ -138,7 +155,6 @@ const onShowSignUpModal = (event) => {
 
 const onShowSettingModal = (event) => {
   ui.setSettingModal()
-  $('#setting-modal').modal('toggle')
 }
 
 const onChangePassword = (event) => {
@@ -151,6 +167,7 @@ const onChangePassword = (event) => {
     .catch((error) => {
       console.log(error)
       ui.addInvalid($('.setting-form'))
+      ui.clearForms()
     })
 }
 

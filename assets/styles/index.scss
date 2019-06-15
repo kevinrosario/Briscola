@@ -34,25 +34,34 @@ main {
 .card-representation {
   background-color: $blue;
   border-radius: 10px;
-  height: 80%;
-  margin: .2em;
+  margin: 3px;
+  min-height: 80%;
+  min-width: 60%;
   text-align: center;
-  width: 60%;
+
+  &:hover {
+    border: 2px solid $light-blue;
+    margin: 1px;
+  }
+}
+
+.sign-failure {
+  color: $red;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .user-card {
   cursor: pointer;
 }
 
-.user-card:hover {
-  border: 2px solid $light-blue;
-}
+
 
 .game-text {
   background-color: $blue;
   color: $white;
   font-family: 'Dancing Script', cursive;
-  font-size: .9em;
+  font-size: 1.1em;
 }
 
 .btn-secondary {
@@ -60,9 +69,9 @@ main {
 }
 
 .gamearea {
-  margin: auto;
-  max-height: 80vh;
-  max-width: 80vh;
+  margin: 0 auto;
+  max-width: 90vh;
+  min-height: 85vh;
 }
 
 .gameboard {
@@ -73,9 +82,9 @@ main {
     align-items: center;
     // border: 1px solid $black;
     display: flex;
+    height: calc(100/3);
     justify-content: center;
     white-space: pre-line;
-    height: calc(100/3);
   }
 }
 
@@ -83,7 +92,7 @@ main {
   font-family: 'Dancing Script', cursive;
 }
 
-#display-sign-up-modal{
+#display-sign-up-modal {
   color: $light-blue;
 }
 
@@ -92,7 +101,7 @@ main {
     max-width: 70%;
   }
 
-  .game-text{
-    font-size: .5em;
+  .game-text {
+    font-size: .8em;
   }
 }

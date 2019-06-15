@@ -59,7 +59,15 @@ const removeModal = () => {
 }
 
 const removeGameFromModal = (id) => {
-  $(`[data-game=${id}]`).remove()
+  $(`[data-game=${id}]`).text(`Game #${id} Deleted!`)
+}
+
+const setGameLoaded = (id) => {
+  $(`[data-load=${id}]`).text('Game Loaded!')
+}
+
+const removeGameLoaded = (id) => {
+  $(`[data-load=${id}]`).text('Load Game')
 }
 
 const removeSuccess = (target) => {
@@ -80,7 +88,7 @@ const setGame = (game) => {
     $('#current-computer-selection').empty().removeClass('card-representation')
     $('#current-user-selection').empty().removeClass('card-representation')
     $('#deck').text(`Cards Left: ${game.deck.length}\n`)
-    $('#deck').append(`Score: ${calculateScore(game.player_one_earned)}\n`)
+    // $('#deck').append(`Score: ${calculateScore(game.player_one_earned)}\n`)
     $('#briscola').text(`Briscola\nSuit: ${game.briscola.suit}\nRank: ${game.briscola.rank}\n`)
     game.player_one_hand.forEach((card, index) => {
       $(`[data-id=${index}]`).text(`Suit: ${card.suit}\nRank: ${card.rank}\n`)
@@ -106,12 +114,16 @@ const addPlayerTwoSelection = (card) => {
     .addClass('card-representation')
 }
 
-const calculateScore = (playerEarned) => {
-  let score = 0
-  playerEarned.forEach((card) => {
-    score += card.point_value
-  })
-  return score
+const clearForms = () => {
+  $('.form').trigger('reset')
+}
+
+const setSignFailure = () => {
+  $('.sign-failure').text('Wrong email or password!')
+}
+
+const removeSignFailure = () => {
+  $('.sign-failure').empty()
 }
 
 module.exports = {
@@ -125,11 +137,16 @@ module.exports = {
   setIndexModal,
   setSettingModal,
   setGame,
+  setSignFailure,
+  setGameLoaded,
   moveCard,
   removeSuccess,
   removeInvalid,
   removeFromContainer,
   removeSignOut,
   removeModal,
-  removeGameFromModal
+  removeSignFailure,
+  removeGameFromModal,
+  removeGameLoaded,
+  clearForms
 }
