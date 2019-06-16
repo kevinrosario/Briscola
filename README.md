@@ -34,7 +34,7 @@ I invested around 50 hours in this project. The most important thing I did was t
 
 ## Wireframes
 
-Here is the [link](https://imgur.com/22mmdHxg) to my wireframes.
+Here is the [link](https://imgur.com/22mmdHx) to my wireframes.
 
 ## Entity Relationship Diagram
 
