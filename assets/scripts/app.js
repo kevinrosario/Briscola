@@ -9,7 +9,7 @@
 const eventHandler = require('./event.js')
 
 $(() => {
-  eventHandler.onSetSignIn()
+  eventHandler.onSetSignIn() // app starts with sign-in template
   $('.container').on('submit', '#sign-in', eventHandler.onSignIn)
   $('.container').on('submit', '#sign-up', eventHandler.onSignUp)
   $('.container').on('click', '#display-sign-up-modal', eventHandler.onShowSignUpModal)
@@ -23,6 +23,9 @@ $(() => {
   $('.navbar-nav').on('click', '.btn-danger', eventHandler.onDeleteGame)
   $('.navbar-nav').on('click', '#new-game', eventHandler.onNewGame)
   $('.container').on('click', '.user-card', eventHandler.onCardSelected)
+
+  $('.navbar-nav').on('click', '#rules', eventHandler.onShowRulesModal)
+  $('.navbar-nav').on('hide.bs.modal', '#rules-modal', eventHandler.onRemoveModal)
 
   $('.navbar-nav').on('click', '#settings', eventHandler.onShowSettingModal)
   $('.navbar-nav').on('submit', '#change-password', eventHandler.onChangePassword)

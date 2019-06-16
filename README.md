@@ -1,6 +1,6 @@
 # Briscola-Client
 
-Briscola is a web game developed for the Software Engineering Immersive bootcamp using HTML, CSS and JavaScript. The project also uses Bootstrap framework and jQuery library. This front-end connects to my [RESTful API](https://github.com/kevinrosario/Briscola-API) deployed in Heroku which manages most of the game logic. This is the [link](https://briscola-api.herokuapp.com/) deployed in heroku but it won't work because I restricted the access to my deployed client only.
+Briscola is a web game developed for the Software Engineering Immersive bootcamp using HTML, CSS and JavaScript. The project also uses Bootstrap framework and jQuery library. This front-end connects to my [RESTful API](https://github.com/kevinrosario/Briscola-API) deployed in Heroku which manages most of the game logic. This is the [link](https://briscola-api.herokuapp.com/) for the deployed app in heroku but it won't work because I restricted the access of the app to my deployed client only.
 
 ## How to use it
 

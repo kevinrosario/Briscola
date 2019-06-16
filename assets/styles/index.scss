@@ -25,6 +25,21 @@ main {
   min-height: 94vh;
 }
 
+table {
+  margin: 0 auto;
+
+  td {
+    padding: 4px;
+    text-align: left;
+  }
+}
+
+div {
+  p {
+    margin: 1rem 0;
+  }
+}
+
 .container {
   position: absolute;
 }

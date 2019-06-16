@@ -152,14 +152,6 @@ const onLoadGame = (event) => {
     })
 }
 
-const onShowSignUpModal = (event) => {
-  ui.setSignUpModal()
-}
-
-const onShowSettingModal = (event) => {
-  ui.setSettingModal()
-}
-
 const onChangePassword = (event) => {
   event.preventDefault()
   const formData = getFormFields(event.target)
@@ -172,6 +164,18 @@ const onChangePassword = (event) => {
       ui.addInvalid($('.setting-form'))
       ui.clearForms()
     })
+}
+
+const onShowSignUpModal = (event) => {
+  ui.setSignUpModal()
+}
+
+const onShowSettingModal = (event) => {
+  ui.setSettingModal()
+}
+
+const onShowRulesModal = (event) => {
+  ui.setRulesModal()
 }
 
 const onRemoveModal = () => {
@@ -192,5 +196,6 @@ module.exports = {
   onShowIndexModal,
   onShowSignUpModal,
   onShowSettingModal,
+  onShowRulesModal,
   onRemoveModal
 }

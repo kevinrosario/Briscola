@@ -7,6 +7,7 @@ const signOutTemplate = require('./templates/nav-bar.handlebars')
 const indexGamesTemplate = require('./templates/index-games.handlebars')
 const settingsTemplate = require('./templates/settings.handlebars')
 const gameFinishedTemplate = require('./templates/game-finished.handlebars')
+const rulesTemplate = require('./templates/rules.handlebars')
 const score = require('./templates/helpers/score.js')
 
 const setSignIn = () => {
@@ -19,14 +20,19 @@ const setBoard = () => {
   $('.container').html(showBoard)
 }
 
+const setSignUpModal = () => {
+  const showSignUp = signUpTemplate()
+  $('.container').append(showSignUp)
+}
+
 const setSignOut = () => {
   const signOut = signOutTemplate()
   $('.navbar-nav').append(signOut)
 }
 
-const setSignUpModal = () => {
-  const showSignUp = signUpTemplate()
-  $('.container').append(showSignUp)
+const setRulesModal = () => {
+  const showRules = rulesTemplate()
+  $('.navbar-nav').append(showRules)
 }
 
 const setSettingModal = () => {
@@ -35,8 +41,13 @@ const setSettingModal = () => {
 }
 
 const setIndexModal = (games) => {
-  const showIndexModal = indexGamesTemplate(games)
-  $('.navbar-nav').append(showIndexModal)
+  const showIndex = indexGamesTemplate(games)
+  $('.navbar-nav').append(showIndex)
+}
+
+const removeModal = () => {
+  $('.modal').remove()
+  $('.fade').remove()
 }
 
 const addValid = (target) => {
@@ -53,11 +64,6 @@ const removeFromContainer = () => {
 
 const removeSignOut = () => {
   $('.log').remove()
-}
-
-const removeModal = () => {
-  $('.modal').remove()
-  $('.fade').remove()
 }
 
 const removeGameFromModal = (id) => {
@@ -161,6 +167,7 @@ module.exports = {
   setSignUpModal,
   setIndexModal,
   setSettingModal,
+  setRulesModal,
   setGame,
   setSignFailure,
   setGameLoaded,
