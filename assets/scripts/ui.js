@@ -8,6 +8,7 @@ const indexGamesTemplate = require('./templates/index-games.handlebars')
 const settingsTemplate = require('./templates/settings.handlebars')
 const gameFinishedTemplate = require('./templates/game-finished.handlebars')
 const rulesTemplate = require('./templates/rules.handlebars')
+const userFeedbackTemplate = require('./templates/user-feedback.handlebars')
 const score = require('./templates/helpers/score.js')
 
 const setSignIn = () => {
@@ -17,7 +18,14 @@ const setSignIn = () => {
 
 const setBoard = () => {
   const showBoard = boardTemplate()
+  const userFeedBack = userFeedbackTemplate()
   $('.container').html(showBoard)
+  $('main').append(userFeedBack)
+  setBeginningFeedback()
+}
+
+const removeUserFeedback = () => {
+  $('.user-feedback').remove()
 }
 
 const setSignUpModal = () => {
@@ -78,16 +86,8 @@ const removeGameLoaded = (id) => {
   $(`[data-load=${id}]`).text('Load Game')
 }
 
-const removeSuccess = (target) => {
-  if ($(target).hasClass('is-valid')) {
-    $(target).removeClass('is-valid')
-  }
-}
-
-const removeInvalid = (target) => {
-  if ($(target).hasClass('is-invalid')) {
-    $(target).removeClass('is-invalid')
-  }
+const removeValidOrInvalid = (target) => {
+  $(target).removeClass('is-invalid').removeClass('is-valid')
 }
 
 const setGame = (game) => {
@@ -99,14 +99,17 @@ const setGame = (game) => {
     $('#deck').text(`Cards Left: ${game.deck.length}\n`)
     $('#briscola').text(`Briscola\nSuit: ${game.briscola.suit}\nRank: ${game.briscola.rank}\n`)
     game.player_one_hand.forEach((card, index) => {
-      console.log(`Drawing ${card.suit}, ${card.rank} with Index: ${index}`)
       $(`[data-id=${index}]`).text(`Suit: ${card.suit}\nRank: ${card.rank}\n`)
       $(`[data-id=${index}]`).addClass('user-card').addClass('card-representation')
     })
     if (game.current_cards.length !== 0) {
+      computerWinLastRoundFeedback()
       $('#current-computer-selection').append(`CPU\nSuit: ${game.current_cards[0].suit}\nRank: ${game.current_cards[0].rank}\n`).addClass('card-representation')
+    } else {
+      playerWonLastRoundFeedback()
     }
   } else {
+    setBeginningFeedback()
     setGameFinishedAlert(game.player_one_earned)
   }
 }
@@ -131,7 +134,7 @@ const setGameFinishedAlert = (playerEarnedCards) => {
 }
 
 const removeGameFinishedAlert = () => {
-  $('.alert').remove()
+  $('.game-end').remove()
 }
 
 const moveCard = (id) => {
@@ -149,12 +152,57 @@ const clearForms = () => {
   $('.form').trigger('reset')
 }
 
-const setSignFailure = () => {
-  $('.sign-failure').text('Wrong email or password!')
+const setSignInFailure = () => {
+  $('.sign-in-failure').text('Wrong email or password!')
 }
 
-const removeSignFailure = () => {
-  $('.sign-failure').empty()
+const setSignUpFailure = () => {
+  $('.sign-up-failure').text('Wrong email or password!')
+}
+
+const removeSignInFailure = () => {
+  $('.sign-in-failure').empty()
+}
+
+const removeSignUpFailure = () => {
+  $('.sign-up-failure').empty()
+}
+
+const setChangePasswordFailure = () => {
+  $('.change-password-failure').text('Unable to change password').addClass('failure')
+}
+
+const setChangePasswordSuccess = () => {
+  $('.change-password-failure').text('Password changed successfully!').addClass('success')
+}
+
+const removeChangePasswordText = () => {
+  $('.change-password-failure').empty().removeClass('failure').removeClass('success')
+}
+
+const setBeginningFeedback = () => {
+  $('.user-feedback').removeClass('alert-danger alert-info alert-success alert-light')
+  $('.user-feedback').text("Click on 'New Game' to begin").addClass('alert-light')
+}
+
+const waitingForComputerFeedBack = () => {
+  $('.user-feedback').removeClass('alert-danger alert-info alert-success alert-light')
+  $('.user-feedback').text('Waiting for computer...').addClass('alert-info')
+}
+
+const playerTurnFeedback = () => {
+  $('.user-feedback').removeClass('alert-danger alert-info alert-success alert-light')
+  $('.user-feedback').text('Choose one card').addClass('alert-light')
+}
+
+const computerWinLastRoundFeedback = () => {
+  $('.user-feedback').removeClass('alert-danger alert-info alert-success alert-light')
+  $('.user-feedback').text('Computer won last round\n Choose one card').addClass('alert-danger')
+}
+
+const playerWonLastRoundFeedback = () => {
+  $('.user-feedback').removeClass('alert-danger alert-info alert-success alert-light')
+  $('.user-feedback').text('You won last round\n Choose one card').addClass('alert-success')
 }
 
 module.exports = {
@@ -169,17 +217,26 @@ module.exports = {
   setSettingModal,
   setRulesModal,
   setGame,
-  setSignFailure,
+  setSignInFailure,
+  setSignUpFailure,
   setGameLoaded,
+  setChangePasswordSuccess,
+  setChangePasswordFailure,
   moveCard,
-  removeSuccess,
-  removeInvalid,
+  removeValidOrInvalid,
   removeFromContainer,
   removeSignOut,
   removeModal,
-  removeSignFailure,
+  removeSignUpFailure,
+  removeSignInFailure,
   removeGameFromModal,
   removeGameLoaded,
   removeGameFinishedAlert,
-  clearForms
+  removeChangePasswordText,
+  removeUserFeedback,
+  clearForms,
+  playerTurnFeedback,
+  waitingForComputerFeedBack
+  // computerWinLastRoundFeedback,
+  // playerWonLastRoundFeedback
 }

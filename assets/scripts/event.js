@@ -7,7 +7,7 @@ const config = require('./config.js')
 const store = require('./store.js')
 
 const onSetSignIn = () => {
-  ui.removeSignFailure()
+  ui.removeSignUpFailure()
   ui.setSignIn()
 }
 
@@ -28,7 +28,7 @@ const onSignIn = (event) => {
     .catch(() => {
       ui.addInvalid($('.login-form'))
       ui.clearForms()
-      ui.setSignFailure()
+      ui.setSignInFailure()
     })
 }
 
@@ -42,7 +42,7 @@ const onSignUp = (event) => {
     }).catch(() => {
       ui.addInvalid($('.sign-up-form'))
       ui.clearForms()
-      ui.setSignFailure()
+      ui.setSignUpFailure()
     })
 }
 
@@ -51,14 +51,13 @@ const onSignOut = (event) => {
     .then((response) => {
       ui.removeFromContainer()
       ui.removeSignOut()
-      ui.removeInvalid()
-      ui.removeSignFailure()
+      ui.removeValidOrInvalid()
+      ui.removeSignUpFailure()
       ui.removeGameFinishedAlert()
+      ui.removeUserFeedback()
       onSetSignIn()
       store.game = {}
-    }).catch((error) => {
-      console.log(error)
-    })
+    }).catch(console.error)
 }
 
 const onCardSelected = (event) => {
@@ -67,18 +66,29 @@ const onCardSelected = (event) => {
   api.update(store.game, config.apiUrl, store.game.id, store.user.token)
     .then((response) => {
       store.game = response.game
-      setTimeout(() => {
-        addPlayerSelection()
-      }, 200)
-      setTimeout(() => {
-        ui.setGame(store.game)
-      }, 600)
+      playOrder()
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(console.error)
 }
 
+const playOrder = () => {
+  // player won last round
+  if (store.game.player_two_last_selection[0]) {
+    ui.waitingForComputerFeedBack()
+    setTimeout(addPlayerSelection, 1000)
+    setTimeout(() => {
+      ui.setGame(store.game) // user need to select first card
+    }, 2000)
+  } else {
+    // computer won last round
+    ui.waitingForComputerFeedBack()
+    setTimeout(() => {
+      ui.setGame(store.game) // player needs to choose one card because computer already played
+    }, 1000)
+  }
+}
+
+// adds card that computer send
 const addPlayerSelection = () => {
   if (store.game.player_two_last_selection[0]) {
     ui.addPlayerTwoSelection(store.game.player_two_last_selection[0])
@@ -98,10 +108,9 @@ const onNewGame = (event) => {
       store.game = response.game
       ui.setGame(store.game)
       ui.removeGameFinishedAlert()
+      ui.playerTurnFeedback()
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(console.error)
 }
 
 const onShowIndexModal = (event) => {
@@ -113,9 +122,7 @@ const onShowIndexModal = (event) => {
       }
       $('#index-games').modal('toggle')
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(console.error)
 }
 
 const onDeleteGame = (event) => {
@@ -123,15 +130,12 @@ const onDeleteGame = (event) => {
   api.destroy(id, config.apiUrl, store.user.token)
     .then((response) => {
       ui.removeGameFromModal(id)
-      console.log(store.game)
       if (store.game.id !== undefined && id === store.game.id) { // remove current game
         store.game = {}
         ui.setGame(store.game)
       }
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(console.error)
 }
 
 const onLoadGame = (event) => {
@@ -147,21 +151,23 @@ const onLoadGame = (event) => {
       ui.setGameLoaded(store.game.id)
       ui.removeGameFinishedAlert()
     })
-    .catch((error) => {
-      console.log(error)
-    })
+    .catch(console.error)
 }
 
 const onChangePassword = (event) => {
   event.preventDefault()
   const formData = getFormFields(event.target)
+  ui.removeValidOrInvalid($('.setting-form'))
+  ui.removeChangePasswordText()
   api.changePassword(formData, config.apiUrl, store.user.token)
     .then((response) => {
       ui.addValid($('.setting-form'))
+      ui.setChangePasswordSuccess()
     })
     .catch((error) => {
       console.log(error)
       ui.addInvalid($('.setting-form'))
+      ui.setChangePasswordFailure()
       ui.clearForms()
     })
 }

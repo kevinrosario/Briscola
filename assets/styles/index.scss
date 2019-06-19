@@ -64,7 +64,13 @@ div {
   }
 }
 
-.sign-failure {
+.success {
+  color: $success-green;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.failure {
   color: $red;
   margin: 0 auto;
   text-align: center;
@@ -72,6 +78,14 @@ div {
 
 .user-card {
   cursor: pointer;
+}
+
+.user-feedback {
+  line-height: 1.5em;
+  position: absolute;
+  top: calc(60vh/3);
+  white-space: pre-line;
+  z-index: 1;
 }
 
 .game-text {
@@ -97,7 +111,6 @@ div {
 
   > .gamebox {
     align-items: center;
-    // border: 1px solid $black;
     display: flex;
     height: calc(100/3);
     justify-content: center;
