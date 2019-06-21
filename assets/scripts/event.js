@@ -55,6 +55,7 @@ const onSignOut = (event) => {
       ui.removeSignUpFailure()
       ui.removeGameFinishedAlert()
       ui.removeUserFeedback()
+      ui.clearForms()
       onSetSignIn()
       store.game = {}
     }).catch(console.error)
@@ -163,6 +164,7 @@ const onChangePassword = (event) => {
     .then((response) => {
       ui.addValid($('.setting-form'))
       ui.setChangePasswordSuccess()
+      ui.clearForms()
     })
     .catch((error) => {
       console.log(error)
